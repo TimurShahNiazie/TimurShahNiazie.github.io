@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Budget History - Wealth Manager</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <header>
+        <h1>Budget History</h1>
+        <nav>
+            <a href="{{ url_for('dashboard') }}">Dashboard</a>
+            <a href="{{ url_for('index') }}">New Budget</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        {% if budgets %}
+            <table class="budget-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Total Expenses</th>
+                        <th>Essential</th>
+                        <th>Discretionary</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for budget in budgets %}
+                        <tr>
+                            <td>{{ budget.created_at.strftime('%m/%d/%Y') }}</td>
+                            <td>${{ "%.2f"|format(budget.total_expenses) }}</td>
+                            <td>${{ "%.2f"|format(budget.total_essential) }}</td>
+                            <td>${{ "%.2f"|format(budget.total_discretionary) }}</td>
+                            <td>
+                                <a href="{{ url_for('view_budget', budget_id=budget._id) }}" class="btn">View</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No budget history yet. <a href="{{ url_for('index') }}">Create your first budget</a></p>
+        {% endif %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard - Wealth Manager</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <header>
+        <div class="user-profile">
+            <img src="{{ user.picture }}" alt="Profile" width="40">
+            <span>{{ user.name }}</span>
+        </div>
+        <nav>
+            <a href="{{ url_for('index') }}">New Budget</a>
+            <a href="{{ url_for('history') }}">History</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h2>Recent Budgets</h2>
+        {% if budgets %}
+            <!-- ... (same budget cards as before) ... -->
+        {% else %}
+            <p>No budgets yet. <a href="{{ url_for('index') }}">Create your first budget</a></p>
+        {% endif %}
+    </div>
+</body>
+</html>

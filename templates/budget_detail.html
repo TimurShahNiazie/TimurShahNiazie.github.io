@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Budget Details - Wealth Manager</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <header>
+        <h1>Budget Details</h1>
+        <nav>
+            <a href="{{ url_for('dashboard') }}">Dashboard</a>
+            <a href="{{ url_for('index') }}">New Budget</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="budget-header">
+            <h2>Budget from {{ budget.created_at.strftime('%m/%d/%Y') }}</h2>
+            <p class="total-expenses">Total: ${{ "%.2f"|format(budget.total_expenses) }}</p>
+        </div>
+
+        <div class="budget-details-grid">
+            <div class="expense-breakdown">
+                <h3>Expense Breakdown</h3>
+                <div class="expense-category">
+                    <h4>Essential Expenses</h4>
+                    <ul>
+                        {% for category, amount in budget.data.essential.items() %}
+                            <li>{{ category|title }}: ${{ "%.2f"|format(amount) }}</li>
+                        {% endfor %}
+                    </ul>
+                    <p class="category-total">Total: ${{ "%.2f"|format(budget.total_essential) }}</p>
+                </div>
+
+                <div class="expense-category">
+                    <h4>Discretionary Expenses</h4>
+                    <ul>
+                        {% for category, amount in budget.data.discretionary.items() %}
+                            <li>{{ category|title }}: ${{ "%.2f"|format(amount) }}</li>
+                        {% endfor %}
+                    </ul>
+                    <p class="category-total">Total: ${{ "%.2f"|format(budget.total_discretionary) }}</p>
+                </div>
+            </div>
+
+            <div class="visualization">
+                <img src="{{ budget.visualization }}" alt="Budget Pie Chart">
+            </div>
+
+            <div class="advice">
+                <h3>AI Advice</h3>
+                <div class="advice-content">
+                    {{ budget.ai_advice | replace('\n', '<br>') | safe }}
+                </div>
+            </div>
+        </div>
+
+        <div class="action-buttons">
+            <a href="{{ url_for('history') }}" class="btn">Back to History</a>
+        </div>
+    </div>
+</body>
+</html>

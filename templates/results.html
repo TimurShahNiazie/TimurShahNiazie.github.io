@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Budget Results</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <header>
+        <h1>Your Budget Analysis</h1>
+        <nav>
+            <a href="{{ url_for('dashboard') }}">Dashboard</a>
+            <a href="{{ url_for('index') }}">New Budget</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="results-grid">
+            <div class="visualization">
+                <h2>Budget Allocation</h2>
+                <img src="{{ plot_url }}" alt="Budget Pie Chart">
+                <div class="budget-stats">
+                    <p>Essential: {{ essential_percentage }}%</p>
+                    <p>Discretionary: {{ discretionary_percentage }}%</p>
+                </div>
+            </div>
+
+            <div class="advice">
+                <h2>AI-Powered Advice</h2>
+                <div class="advice-content">
+                    {{ budget.ai_advice | replace('\n', '<br>') | safe }}
+                </div>
+            </div>
+        </div>
+
+        <div class="action-buttons">
+            <a href="{{ url_for('index') }}" class="btn">Create Another Budget</a>
+            <a href="{{ url_for('dashboard') }}" class="btn">Back to Dashboard</a>
+        </div>
+    </div>
+</body>
+</html>
